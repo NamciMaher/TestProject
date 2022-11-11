@@ -267,7 +267,7 @@ class DeliveryCarrier(models.Model):
 		aramex_contact_obj.Department = ""
 		aramex_contact_obj.PersonName  = partner_id.name
 		aramex_contact_obj.Title = partner_id.title.name if partner_id.title else ""
-		aramex_contact_obj.CompanyName = partner_id.parent_id.name if partner_id.parent_id else "Odoo"
+		aramex_contact_obj.CompanyName = partner_id.parent_id.name if partner_id.parent_id else "Wamia Marketplace"
 		aramex_contact_obj.PhoneNumber1 = partner_id.phone 
 		aramex_contact_obj.PhoneNumber1Ext = ""
 		aramex_contact_obj.PhoneNumber2  = ""
