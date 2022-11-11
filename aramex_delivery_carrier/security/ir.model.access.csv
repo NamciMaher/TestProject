@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_aramex_payment_method_users,delivery.carrier.aramex.service,model_aramex_payment_method,,1,1,1,1
+
+access_aramex_product_type_users,delivery.carrier.aramex.product.type,model_aramex_product_type,,1,1,1,1
+
+access_aramex_product_group_users,delivery.carrier.aramex.product.group,model_aramex_product_group,,1,1,1,1
+
+access_aramex_service_users,delivery.carrier.aramex.service,model_aramex_service,,1,1,1,1
+

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>   
+        <record id="view_picking_with_aramex_declared_value_form_view" model="ir.ui.view">
+            <field name="name">delivery.stock.picking_withlabel.form.view</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="odoo_shipping_service_apps.view_picking_withlabel_form_view"/>
+            <field name="arch" type="xml"> 
+            <xpath expr="//field[@name='label_genrated']/../.." position='after'>
+                <group col="2">
+                    <field name="aramex_shipping_label" widget="url" readonly="1" attrs="{'invisible':['|', ('delivery_type','=','aramex'), ('label_genrated','=',False)]}" />
+                </group>
+            </xpath>
+            </field>
+        </record>
+    
+        <record id="shipping_aramex_view_form" model="ir.ui.view">
+            <field name="name">shipping.aramex.form</field>
+            <field name="model">delivery.carrier</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="odoo_shipping_service_apps.view_delivery_carrier_form_inherit_wk_shipping" />     
+            <field name="arch" type="xml">  
+                <xpath expr="//group[@name='Delivery Setting']" col='2' position="after">
+                    <group string="Aramex Shipping Infomation " attrs="{'invisible':[('delivery_type', '!=', 'aramex')]}">
+                        <field name="aramex_product_group"  attrs="{'required':[('delivery_type', '==', 'aramex')]}" />
+                        <field name="aramex_product_type" attrs="{'required':[('delivery_type','==','aramex')]}" />
+                        <field name="aramex_payment_method" attrs="{'required':[('delivery_type','==','aramex')]}" />
+                        <field name="aramex_service" attrs="{'required':[('delivery_type','==','aramex')]}"/>
+                        <field name="aramex_sender_multi_ship" />
+                        <field name="aramex_consignment_length" attrs="{'required':[('aramex_sender_multi_ship','==',False,)], 'invisible':[('aramex_sender_multi_ship','==',True,)]}" />
+                        <field name="aramex_consignment_width" attrs="{'required':[('aramex_sender_multi_ship','==',False,)], 'invisible':[('aramex_sender_multi_ship','==',True,)]}" />
+                        <field name="aramex_consignment_height" attrs="{'required':[('aramex_sender_multi_ship','==',False,)], 'invisible':[('aramex_sender_multi_ship','==',True,)]}" />
+
+                    </group>  
+                </xpath>
+                <!-- <field name="delivery_uom" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </field> -->
+            </field>
+        </record>
+
+        <record id="wk_aramex_delivery_carrier_inherit_form" model="ir.ui.view">
+            <field name="name">aramex.delievry.carrier.form</field>
+            <field name="model">delivery.carrier</field>    
+            <field name="type">form</field>
+            <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Aramex Credentials" attrs="{'invisible':[('delivery_type' , '!=' , 'aramex')]}">
+                        <group>
+                            <group>
+                                <field name="aramex_username" attrs="{'required':[('delivery_type' , '=' , 'aramex')]}"/>
+                                <field name="aramex_password" password='1' attrs="{'required':[('delivery_type' , '=' , 'aramex')]}"/>
+                                <field name="aramex_account_no" attrs="{'required':[('delivery_type' , '=' , 'aramex')]}"/>
+                            </group>
+                            <group>
+                                <field name="aramex_account_pin" attrs="{'required':[('delivery_type' , '=' , 'aramex')]}"/>
+                                <field name="aramex_account_entity" attrs="{'required':[('delivery_type' , '=' , 'aramex')]}"/>
+                                <field name="aramex_account_country_code" attrs="{'required':[('delivery_type' , '=' , 'aramex')]}"/>                                
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="delivery_carrier_aramex_product_type_form" model="ir.ui.view">
+            <field name="name">delivery.carrier.aramex.product.type.form</field>
+            <field name="model">aramex.product.type</field> 
+            <field name="type">form</field>           
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="is_dutiable"/>
+                            <field name="description"/>                      
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="delivery_carrier_aramex_service_form" model="ir.ui.view">
+            <field name="name">delivery.carrier.aramex.service.form</field>
+            <field name="model">aramex.service</field> 
+            <field name="type">form</field>           
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="description"/>                      
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="delivery_carrier_aramex_product_group_form" model="ir.ui.view">
+            <field name="name">delivery.carrier.aramex.product.group.form</field>
+            <field name="model">aramex.product.group</field> 
+            <field name="type">form</field>           
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="description"/>                      
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record> 
+
+        <record id="delivery_carrier_aramex_payment_method_form" model="ir.ui.view">
+            <field name="name">delivery.carrier.aramex.payment.method.form</field>
+            <field name="model">aramex.payment.method</field> 
+            <field name="type">form</field>           
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="description"/>                      
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="delivery_carrier_aramex_product_type_tree" model="ir.ui.view">
+            <field name="name">delivery.carrier.aramex.product.type.tree</field>
+            <field name="model">aramex.product.type</field> 
+            <field name="type">tree</field>           
+            <field name="arch" type="xml">
+                <tree string="contaier">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="is_dutiable"/>
+                    <field name="description"/>                      
+                </tree>
+            </field>
+        </record>
+
+        <record id="delivery_carrier_aramex_service_type_tree" model="ir.ui.view">
+            <field name="name">delivery.carrier.aramex.service.tree</field>
+            <field name="model">aramex.service</field> 
+            <field name="type">tree</field>           
+            <field name="arch" type="xml">
+                <tree string="contaier">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="description"/>                      
+                </tree>
+            </field>
+        </record> 
+
+        <record id="delivery_carrier_aramex_product_group_tree" model="ir.ui.view">
+            <field name="name">delivery.carrier.aramex.product.group.tree</field>
+            <field name="model">aramex.product.group</field> 
+            <field name="type">tree</field>           
+            <field name="arch" type="xml">
+                <tree string="contaier">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="description"/>                      
+                </tree>
+            </field>
+        </record> 
+
+        <record id="delivery_carrier_aramex_payment_method_tree" model="ir.ui.view">
+            <field name="name">delivery.carrier.aramex.payment.method.tree</field>
+            <field name="model">aramex.payment.method</field> 
+            <field name="type">tree</field>           
+            <field name="arch" type="xml">
+                <tree string="contaier">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="description"/>                      
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_delivery_carrier_aramex_payment_method">
+            <field name="name">Aramex Payment Method</field>
+            <field name="res_model">aramex.payment.method</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="delivery_carrier_aramex_payment_method_tree"/>
+        </record>    
+
+         
+        <record model="ir.actions.act_window" id="action_delivery_carrier_aramex_product_type">
+                <field name="name">Aramex Product Type</field>
+                <field name="res_model">aramex.product.type</field>
+                <field name="view_mode">tree,form</field>
+                <field name="view_id" ref="delivery_carrier_aramex_product_type_tree"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_delivery_carrier_aramex_service_type">
+                <field name="name">Aramex Service List</field>
+                <field name="res_model">aramex.service</field>
+                <field name="view_mode">tree,form</field>
+                <field name="view_id" ref="delivery_carrier_aramex_service_type_tree"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_delivery_carrier_aramex_product_group">
+                <field name="name">Aramex Product Group List</field>
+                <field name="res_model">aramex.product.group</field>
+                <field name="view_mode">tree,form</field>
+                <field name="view_id" ref="delivery_carrier_aramex_product_group_tree"/>
+        </record>
+
+
+        <menuitem id="menu_shipping_aramex" name="Aramex Shipping" parent="stock.menu_stock_config_settings"/>
+            <menuitem id="menu_shipping_aramex_product_group" parent="menu_shipping_aramex" name="Product Group"  action="action_delivery_carrier_aramex_product_group"/>
+            <menuitem id="menu_shipping_aramex_product_type" parent="menu_shipping_aramex" name="Product Type"  action="action_delivery_carrier_aramex_product_type"/>               
+            <menuitem id="menu_shipping_aramex_payment_type"  parent="menu_shipping_aramex" name="Payment Type" action="action_delivery_carrier_aramex_payment_method"/>
+            <menuitem id="menu_shipping_aramex_service"  parent="menu_shipping_aramex" name="Service Type" action="action_delivery_carrier_aramex_service_type"/>
+    </data>
+</odoo>

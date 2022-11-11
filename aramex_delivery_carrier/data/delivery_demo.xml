@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">     
+
+        <record forcecreate= "True" id="product_product_delivery_aramex" model="product.product">
+            <field name="name">Delivery by Aramex</field>
+            <field name="default_code">Delivery</field>
+            <field name="type">service</field>
+            <field name="standard_price">10.0</field>
+            <field name="list_price">10.0</field>
+        </record>
+
+        <record forcecreate= "True" id="ARMX" model="stock.package.type">
+            <field name="name">Product Packaging For Aramex</field>
+            <field name="package_carrier_type">aramex</field>
+            <field name="shipper_package_code">ARMX</field>
+            <field name= "height">10</field>
+            <field name= "width">10</field>
+            <!-- <field name="cover_amount">10</field> -->
+            <field name="max_weight">100</field>
+            <field name= "packaging_length">10</field>
+        </record>
+
+        <record forcecreate= "True" id= "packaging_ARMX" model= "product.packaging">
+          <field name= "name">Variable</field>
+          <field name= "package_type_id" ref='ARMX'/>
+          <field name= "product_id" ref='product_product_delivery_aramex'/>
+          <field name='qty'>10</field>
+        </record>
+        
+        <record id="aramex_delivery_carrier_express_service" model="delivery.carrier">
+            <field name="name">Aramex Express Shipping</field>
+            <!-- <field name="shipping_enable">1</field> -->
+            <field name="delivery_type">aramex</field>
+            <field name="is_published">True</field>
+            <field name="product_id" ref="product_product_delivery_aramex"></field>
+            <!-- <field name="partner_id" ref="odoo_shipping_service_apps.shipping_partner"/> -->
+            <field name="aramex_product_group" ref="product_group_dom"/>
+            <field name='aramex_product_type' ref='product_type_OND'/>
+            <field name="aramex_payment_method" ref="aramex_payment_method_prepaid"/>
+            <field name="company_id" ref="base.main_company" />
+            <!-- <field name="enviroment">test</field> -->
+            <field name="extra_service_price">10</field> 
+            <!-- <field name="address_validator">True</field>  -->
+            <!-- <field name="website_published">True</field> -->
+            <field name="packaging_id" ref="packaging_ARMX"></field>
+            <!-- <field name="genrate_label">True</field>  -->
+            <field name="void_shipment">True</field>
+            <field name="uom_id" ref='uom.product_uom_kgm'/>
+            <field name='delivery_uom'>KG</field> 
+            <field name="image" type="base64" file="aramex_delivery_carrier/static/src/img/logo-aramex.png"/>           
+        </record>  
+
+        <record id="base.user_root" model="res.users">
+            <field name="groups_id" eval="[
+            (4, ref('base.group_multi_currency')),
+            (4, ref('stock.group_tracking_lot')),
+            (4, ref('stock.group_stock_manager')),
+            (4, ref('product.group_stock_packaging')),
+            (4, ref('product.group_sale_pricelist')),
+            ]"/>
+        </record>
+        <record id="base.group_user" model="res.groups">
+            <field name="name">Packaging</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="implied_ids" eval="[(4, ref('stock.group_tracking_lot'))]"></field>
+        </record>
+
+    </data>
+</odoo>
