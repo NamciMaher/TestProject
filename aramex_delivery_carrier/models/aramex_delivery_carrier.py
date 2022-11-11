@@ -206,7 +206,7 @@ class DeliveryCarrier(models.Model):
 		aramex_shipment_details_obj.ProductType = self.aramex_product_type.code if self.aramex_product_type else "PDX"
 		aramex_shipment_details_obj.PaymentType  = self.aramex_payment_method.code if self.aramex_payment_method else "P"
 		aramex_shipment_details_obj.PaymentOptions = ""
-		aramex_shipment_details_obj.Services  = pickings.x_studio_many2one_field_wtJRP.code if  pickings.x_studio_many2one_field_wtJRP else "CODS"
+		aramex_shipment_details_obj.Services  = pickings.x_studio_many2one_field_z3IRv.code if  pickings.x_studio_many2one_field_z3IRv else "CODS"
 		aramex_shipment_details_obj.NumberOfPieces = 1 if order else 1 if self.aramex_sender_multi_ship else sum([len(packages) for packaging,packages in packaging_ids.items()]) if packaging_ids  else 1     # need to approve
 		aramex_shipment_details_obj.DescriptionOfGoods  = pickings.note if pickings else "Goods description is not defined."
 		aramex_shipment_details_obj.GoodsOriginCountry  = self.env.user.country_id.code
