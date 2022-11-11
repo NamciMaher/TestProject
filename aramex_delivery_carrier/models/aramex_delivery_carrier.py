@@ -210,10 +210,10 @@ class DeliveryCarrier(models.Model):
 		aramex_shipment_details_obj.NumberOfPieces = 1 if order else 1 if self.aramex_sender_multi_ship else sum([len(packages) for packaging,packages in packaging_ids.items()]) if packaging_ids  else 1     # need to approve
 		aramex_shipment_details_obj.DescriptionOfGoods  = pickings.note if pickings else "Goods description is not defined."
 		aramex_shipment_details_obj.GoodsOriginCountry  = self.env.user.country_id.code
-		if pickings.x_studio_many2one_field_wtJRP.code  == 'CODS' :
+		if pickings.x_studio_many2one_field_z3IRv.code  == 'CODS' :
 			aramex_shipment_details_obj.CashOnDeliveryAmount = self.create_aramex_amount(amount_type="CashOnDeliveryAmount",pickings=pickings) 
 		aramex_shipment_details_obj.InsuranceAmount = self.create_aramex_amount(amount_type="InsuranceAmount" ,order=order, package=package, pickings=pickings)   	# need to update
-		if pickings.x_studio_many2one_field_wtJRP.code  == 'RTRN,CODS' :
+		if pickings.x_studio_many2one_field_z3IRv.code  == 'RTRN,CODS' :
 			aramex_shipment_details_obj.CashOnDeliveryAmount = self.create_aramex_amount(amount_type="CashOnDeliveryAmount",pickings=pickings) 
 		aramex_shipment_details_obj.InsuranceAmount = self.create_aramex_amount(amount_type="InsuranceAmount" ,order=order, package=package, pickings=pickings)   
 		if self.aramex_product_type.is_dutiable:
